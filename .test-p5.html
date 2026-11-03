@@ -1,0 +1,43 @@
+<!doctype html>
+<meta charset="utf-8">
+<script src=".test-p5.min.js"></script>
+<script src=".test-p5.sound.js"></script>
+<script>
+async function setup() {
+  createCanvas(100, 100);
+  console.log("TEST setup", p5.VERSION, typeof p5.FFT, typeof p5.Amplitude);
+  const song = new p5.Oscillator(440);
+  console.log("TEST source", song);
+  const fft = new p5.FFT(32);
+  console.log("TEST fft", fft, fft.input);
+  try {
+    fft.setInput(song);
+    console.log("TEST fft.setInput OK");
+  } catch (error) {
+    console.error("TEST fft.setInput ERROR", error, error.stack);
+  }
+  const amplitude = new p5.Amplitude();
+  try {
+    amplitude.setInput(song);
+    console.log("TEST amplitude.setInput OK");
+  } catch (error) {
+    console.error("TEST amplitude.setInput ERROR", error, error.stack);
+  }
+  try {
+    song.connect(amplitude);
+    console.log("TEST source.connect(amplitude) OK");
+  } catch (error) {
+    console.error("TEST source.connect(amplitude) ERROR", error, error.stack);
+  }
+  const mic = new p5.AudioIn();
+  const micAmplitude = new p5.Amplitude();
+  const micFft = new p5.FFT(32);
+  try {
+    mic.connect(micAmplitude);
+    micFft.setInput(mic);
+    console.log("TEST microphone connections OK");
+  } catch (error) {
+    console.error("TEST microphone connections ERROR", error, error.stack);
+  }
+}
+</script>

@@ -1,0 +1,7 @@
+/workshop
+/demos
+/audio/*.mp3
+/audio/*.wav
+/audio/*.ogg
+
+*.txt

@@ -1,0 +1,37 @@
+body {
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+    background-color: #000;
+    color: #FFF;
+}
+canvas, 
+audio {
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+
+button {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    padding: 1em 2em;
+    font-size: 24px;
+    cursor: pointer;
+    z-index: 99;
+    background: none;
+    color: white;
+    text-transform: uppercase;
+    font-weight: 100;
+    border: 1px solid white;
+    border-radius: 0;
+    transition: all 0.6s ease-in-out;
+}
+
+button:hover {
+    transition: all 0.2s ease-in-out;
+    background: white;
+    color: black;
+}
