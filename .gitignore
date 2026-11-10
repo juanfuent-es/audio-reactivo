@@ -1,7 +1,4 @@
-/workshop
-/demos
-/audio/*.mp3
-/audio/*.wav
-/audio/*.ogg
-
-*.txt
+.DS_Store
+Thumbs.db
+*.log
+node_modules/

@@ -1,37 +1,90 @@
-body {
-    padding: 0;
-    margin: 0;
-    overflow: hidden;
-    background-color: #000;
-    color: #FFF;
-}
-canvas, 
-audio {
-    position: absolute;
-    left: 0;
-    top: 0;
+:root {
+  color-scheme: light;
+  font-family: system-ui, sans-serif;
+  color: #202020;
+  background: #fff;
+  line-height: 1.5;
+  --line: #ddd;
+  --muted: #666;
 }
 
-button {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    padding: 1em 2em;
-    font-size: 24px;
-    cursor: pointer;
-    z-index: 99;
-    background: none;
-    color: white;
-    text-transform: uppercase;
-    font-weight: 100;
-    border: 1px solid white;
-    border-radius: 0;
-    transition: all 0.6s ease-in-out;
+* { box-sizing: border-box; }
+body { margin: 0; }
+.wrap { width: min(68rem, calc(100% - 2rem)); margin-inline: auto; }
+header.site { padding-block: 2rem 1.25rem; border-bottom: 1px solid var(--line); }
+main { padding-block: 1.5rem 3rem; }
+h1, h2, h3 { line-height: 1.2; font-weight: 600; }
+h1 { font-size: clamp(1.6rem, 4vw, 2.3rem); margin: .6rem 0; }
+h2 { font-size: 1.25rem; margin: 0 0 .75rem; }
+h3 { font-size: 1rem; margin: 0 0 .4rem; }
+p { max-width: 75ch; margin: 0 0 1rem; }
+header p, .note, .status, .footer { color: var(--muted); }
+a { color: inherit; text-underline-offset: .2em; }
+a:hover { color: var(--muted); }
+nav, .controls, .metrics { display: flex; flex-wrap: wrap; align-items: center; gap: .75rem; }
+nav { margin-block: 1rem; }
+section + section { margin-top: 2.5rem; }
+article + article { margin-top: 1rem; }
+code, pre { font-family: ui-monospace, monospace; font-size: .9em; }
+pre { padding: 1rem; background: #f5f5f5; overflow-x: auto; }
+button, input, select { font: inherit; }
+button, input::file-selector-button {
+  padding: .5rem .8rem;
+  border: 1px solid #999;
+  border-radius: 3px;
+  background: #fff;
+  color: #202020;
+  cursor: pointer;
 }
+button:hover, input::file-selector-button:hover { background: #eee; }
+button.primary { background: #202020; border-color: #202020; color: #fff; }
+button.primary:hover { background: #444; }
+button:disabled { opacity: .5; cursor: wait; }
+:focus-visible { outline: 2px solid #202020; outline-offset: 3px; }
+input[type="file"] { max-width: 100%; width: 18rem; font-size: .875rem; }
+input[type="range"] { width: 8rem; accent-color: #202020; }
+audio { display: block; width: min(100%, 30rem); }
+canvas { display: block; }
+.controls { margin-bottom: 1rem; }
+.control { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem; max-width: 100%; }
+.controls label, .status, .note, .footer { font-size: .875rem; }
+.status { font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
+.stage {
+  width: 100%;
+  height: clamp(18rem, 60vh, 38rem);
+  position: relative;
+  overflow: hidden;
+  background: #080a11;
+}
+.stage canvas { touch-action: none; }
+.stage--frequencies { height: clamp(36rem, 72vh, 48rem); }
+.note { margin-top: 1rem; }
+.cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr)); gap: 1rem; }
+.card { display: block; padding: 1rem; border: 1px solid var(--line); text-decoration: none; }
+.cards > article { margin: 0; }
+.card p { margin-bottom: .5rem; }
+.card button { margin-top: .5rem; }
+a.card:hover { color: inherit; background: #f5f5f5; }
+.metrics { margin-top: 1rem; }
+.meter { display: grid; grid-template-columns: 3.5rem 6rem 3rem; align-items: center; gap: .5rem; font-size: .8rem; }
+.meter progress { width: 6rem; accent-color: #555; }
+.footer { border-top: 1px solid var(--line); margin-top: 1.5rem; padding-top: 1rem; }
 
-button:hover {
-    transition: all 0.2s ease-in-out;
-    background: white;
-    color: black;
+/* Bocetos independientes: el canvas ocupa la ventana y los controles flotan. */
+body[data-page="sketch"] { color-scheme: dark; background: #080a11; color: #fff; overflow: hidden; }
+body[data-page="sketch"] > canvas { position: fixed; inset: 0; }
+body[data-page="sketch"] > aside,
+body[data-page="sketch"] > p,
+body[data-page="sketch"] > #enter-btn { position: fixed; z-index: 1; }
+body[data-page="sketch"] > aside { top: 1rem; left: 1rem; width: min(28rem, calc(100% - 2rem)); padding: 1rem; background: #111e; }
+body[data-page="sketch"] > p { bottom: 1rem; left: 1rem; right: 1rem; margin: 0; }
+body[data-page="sketch"] > #enter-btn { top: 50%; left: 50%; transform: translate(-50%, -50%); }
+body[data-page="path"] { min-height: 100vh; display: grid; place-items: center; background: #0c0a14; }
+#next-station-container { width: min(900px, 92vw); margin: 10vh auto; }
+#next-station-container svg { stroke-width: 10; }
+
+@media (max-width: 40rem) {
+  header.site { padding-top: 1.25rem; }
+  .controls { gap: .5rem; }
+  .controls .status { flex-basis: 100%; }
 }

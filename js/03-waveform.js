@@ -1,14 +1,12 @@
-const WAVE_AUDIO_PATH = "./sound/locket.mp3";
-
 let waveSong;
 let waveFft;
 let waveAmplitude;
 
 async function setup() {
   createCanvas(windowWidth, windowHeight);
-  waveSong = await loadSound(WAVE_AUDIO_PATH);
+  waveSong = await audioPlayback.load();
   waveFft = new p5.FFT(1024);
-  waveFft.setInput(waveSong);
+  waveSong.connect(waveFft);
   waveAmplitude = new p5.Amplitude(0.9);
   waveSong.connect(waveAmplitude);
   textAlign(CENTER, CENTER);
@@ -42,14 +40,7 @@ function draw() {
 
 async function mousePressed() {
   if (!waveSong) return;
-  await userStartAudio();
-
-  if (waveSong.isPlaying()) {
-    waveSong.stop();
-  } else {
-    waveSong.loop(true);
-    waveSong.play();
-  }
+  await audioPlayback.toggle(waveSong);
 }
 
 function windowResized() {

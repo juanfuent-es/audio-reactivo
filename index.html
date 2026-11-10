@@ -1,129 +1,104 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
   <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Audio Reactive | CENTRO</title>
-    <link rel="stylesheet" href="css/site.css">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Audio reactivo · CENTRO</title>
+    <link rel="stylesheet" href="./css/style.css">
   </head>
-  <body data-page="home">
-    <header>
-      <p>Clase de audio reactivo</p>
-      <h1>Audio reactivo con p5.js</h1>
-      <p>
-        Una introducción práctica para convertir amplitud, frecuencia y forma de onda
-        en decisiones visuales: escala, color, posición, ritmo, densidad y composición.
-      </p>
-      <nav>
-        <a href="#ejercicios">Abrir ejercicios</a>
-        <a href="#teoria">Ver teoría base</a>
-      </nav>
-      <h2>Contenido de la clase</h2>
-      <ul>
-        <li>Amplitud: volumen global con <code>p5.Amplitude()</code>.</li>
-        <li>Frecuencia: bandas de audio con <code>p5.FFT()</code>.</li>
-        <li>Waveform: forma de onda con <code>fft.waveform()</code>.</li>
-        <li>Mapeo visual: convertir datos sonoros en decisiones visuales.</li>
-      </ul>
+  <body>
+    <header class="site">
+      <div class="wrap">
+        <p>CENTRO / Interactividad</p>
+        <h1>Audio reactivo con p5.js</h1>
+        <p>Ejercicios para convertir amplitud y frecuencias en tamaño, brillo y movimiento. Todas las vistas con audio usan la misma canción: <code>locket.mp3</code>.</p>
+        <nav aria-label="Contenido">
+          <a href="#ejercicios">Ejercicios</a>
+          <a href="#teoria">Teoría</a>
+          <a href="#audio">Canción</a>
+        </nav>
+      </div>
     </header>
-
-    <section id="contenido">
-      <h2>Ruta de la clase</h2>
-      <p>
-        La clase avanza desde una lectura simple de volumen hasta composiciones que mezclan
-        varias bandas del espectro. Cada paso separa un concepto para mantener clara la lógica.
-      </p>
-      <article>
-        <h3>1. Señal</h3>
-        <p>El audio cambia constantemente y necesita interacción de usuario para iniciar en navegador.</p>
-      </article>
-      <article>
-        <h3>2. Análisis</h3>
-        <p>Amplitud, FFT y waveform entregan datos de energía, distribución y movimiento.</p>
-      </article>
-      <article>
-        <h3>3. Composición</h3>
-        <p>Mapear datos a escala, color, rotación, líneas y capas construye una pieza visual intencional.</p>
-      </article>
-    </section>
-
-    <section id="teoria">
-      <h2>Teoría mínima para leer audio</h2>
-      <p>Podemos observar el sonido por forma de onda en el tiempo y energía por bandas de frecuencia.</p>
-      <article>
-        <h3>Amplitud</h3>
-        <p>Expresa intensidad general y suele mapearse a escala, pulso, grosor, opacidad o zoom.</p>
-      </article>
-      <article>
-        <h3>Frecuencia</h3>
-        <p>Describe velocidad de vibración y se separa en graves, medios y agudos con comportamientos distintos.</p>
-      </article>
-      <article>
-        <h3>FFT</h3>
-        <p>Divide la señal en bins y cada bin da energía normalizada entre <code>0</code> y <code>1</code>.</p>
-      </article>
-      <article>
-        <h3>Waveform</h3>
-        <p><code>fft.waveform()</code> devuelve muestras entre <code>-1</code> y <code>1</code> para líneas orgánicas.</p>
-      </article>
-    </section>
-
-    <section id="proceso">
-      <h2>Cómo procesarlo con p5.js</h2>
-      <p>La mecánica se repite: cargar audio, iniciar por interacción, analizar y mapear a visuales.</p>
-<pre><code>let song;
+    <main class="wrap">
+      <section id="ejercicios">
+        <h2>Ruta de la clase</h2>
+        <div class="cards">
+          <a class="card" href="./01-frecuencias-for/">
+            <h3>01 / Frecuencias y for</h3>
+            <p>Recorrer el espectro y mostrar un valor por frecuencia.</p>
+          </a>
+          <a class="card" href="./02-clases-sin-audio/">
+            <h3>02 / Clases e instancias</h3>
+            <p>Crear objetos con propiedades y métodos. Ejemplo sin audio.</p>
+          </a>
+          <a class="card" href="./03-estrellas-instancias/">
+            <h3>03 / 128 estrellas</h3>
+            <p>Una clase, muchas instancias: cada estrella responde a una frecuencia.</p>
+          </a>
+          <a class="card" href="./04-bulbo-glow/">
+            <h3>04 / Bulbo glow</h3>
+            <p>Componer trazos de luz que responden a tres bandas de audio.</p>
+          </a>
+        </div>
+        <p class="note">Pulsa Reproducir para iniciar la canción. Puedes comparar las vistas con la pista predeterminada o cargar otro archivo.</p>
+      </section>
+      <section>
+        <h2>Más ejemplos</h2>
+        <nav aria-label="Otros ejercicios">
+          <a href="./01-amplitude.html">Amplitud</a>
+          <a href="./bars.html">Barras</a>
+          <a href="./03-waveform.html">Waveform</a>
+          <a href="./osciloscopio.html">Osciloscopio</a>
+          <a href="./04-smooth-waves.html">Ondas suaves</a>
+          <a href="./seno.html">Seno</a>
+          <a href="./arreglos.html">Arreglos</a>
+          <a href="./path.html">Trayectoria SVG</a>
+        </nav>
+        <p class="note">En los ejemplos de pantalla completa, haz clic en el canvas para reproducir o pausar. Ondas suaves inicia con el botón Entrar.</p>
+      </section>
+      <section id="teoria">
+        <h2>Teoría mínima</h2>
+        <article>
+          <h3>Amplitud</h3>
+          <p><code>p5.Amplitude()</code> mide el volumen global. Se puede mapear a escala, grosor u opacidad.</p>
+        </article>
+        <article>
+          <h3>Frecuencias</h3>
+          <p><code>p5.FFT()</code> divide la señal en un arreglo. En esta versión, <code>fft.analyze()</code> devuelve energía entre 0 y 1.</p>
+        </article>
+        <article>
+          <h3>Forma de onda</h3>
+          <p><code>fft.waveform()</code> devuelve muestras entre −1 y 1 para dibujar la señal en el tiempo.</p>
+        </article>
+      </section>
+      <section id="proceso">
+        <h2>Cargar, analizar y dibujar</h2>
+        <p>Los ejercicios comparten <code>js/audio-playback.js</code>. Este archivo carga la canción y controla la reproducción; cada visualización interpreta sus propios datos.</p>
+        <pre><code>let song;
 let fft;
-let amplitude;
 
 async function setup() {
   createCanvas(windowWidth, windowHeight);
-  song = await loadSound("./sound/locket.mp3");
+  song = await audioPlayback.load();
   fft = new p5.FFT(64);
-  amplitude = new p5.Amplitude();
-  fft.setInput(song);
-  song.connect(amplitude);
+  song.connect(fft);
+}
+
+async function mousePressed() {
+  await audioPlayback.toggle(song);
 }
 
 function draw() {
+  if (!fft) return;
   const spectrum = fft.analyze();
-  const waveform = fft.waveform();
-  const level = amplitude.getLevel();
+  // Recorrer spectrum y mapear sus valores al dibujo.
 }</code></pre>
-      <ul>
-        <li><code>p5.Amplitude(smoothing)</code> estabiliza la amplitud entre cuadros.</li>
-        <li><code>bins</code> define resolución del espectro.</li>
-        <li><code>map()</code> conecta número y dibujo.</li>
-      </ul>
-    </section>
-
-    <section id="audio">
-      <h2>Audios de referencia</h2>
-      <p>Los ejercicios usan el archivo <code>sound/locket.mp3</code>.</p>
-      <article>
-        <h3>locket.mp3</h3>
-        <audio controls preload="metadata" src="./sound/locket.mp3"></audio>
-      </article>
-    </section>
-
-    <section id="ejercicios">
-      <h2>Ejercicios</h2>
-      <p>Secuencia desde amplitud global hasta composición radial con varias lecturas.</p>
-      <article>
-        <h3>01 Amplitude Pulse</h3>
-        <p>Un círculo responde al volumen global para entender golpes y silencios.</p>
-        <a href="01-amplitude.html">Abrir ejercicio</a>
-      </article>
-      <article>
-        <h3>02 Spectrum Bars</h3>
-        <p>Barras reflejadas muestran energía por bins en una lectura FFT clásica.</p>
-        <a href="bars.html">Abrir ejercicio</a>
-      </article>
-      <article>
-        <h3>03 Waveform Ribbon</h3>
-        <p>Una cinta continua usa <code>fft.waveform()</code> con variación de grosor.</p>
-        <a href="03-waveform.html">Abrir ejercicio</a>
-      </article>
-      <p>Los ejercicios que reproducen la canción requieren interacción; el de amplitud solicita acceso al micrófono.</p>
-    </section>
+      </section>
+      <section id="audio">
+        <h2>Canción predeterminada</h2>
+        <p><code>sound/locket.mp3</code> es la pista común para todas las visualizaciones con audio.</p>
+        <audio controls preload="metadata" src="./sound/locket.mp3" aria-label="Escuchar locket.mp3"></audio>
+      </section>
+    </main>
   </body>
 </html>

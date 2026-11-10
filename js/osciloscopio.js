@@ -1,24 +1,22 @@
-let mic, song;
+let song;
 let amplitude;
 let fft;
 
 async function setup() {
   createCanvas(windowWidth, windowHeight);
-  // mic = new p5.AudioIn();
-  song = await loadSound("./sound/locket.mp3");
+  song = await audioPlayback.load();
   amplitude = new p5.Amplitude();
   song.connect(amplitude);
   fft = new p5.FFT(32);
-  fft.setInput(song);
+  song.connect(fft);
 }
 async function mousePressed() {
-  await userStartAudio();
-  // mic.start();
-  song.play();
+  await audioPlayback.toggle(song);
 }
 function draw() {
   background(0);
-  let level = amplitude.getLevel();
+  if (!amplitude || !fft) return;
+  const level = amplitude.getLevel();
   const waveform = fft.waveform();
   noFill();
   strokeWeight(level * 10);

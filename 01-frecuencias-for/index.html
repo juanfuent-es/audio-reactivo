@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>01 / Un valor por frecuencia · Audio reactivo</title>
+    <link rel="stylesheet" href="../css/style.css">
+  </head>
+  <body>
+    <header class="site">
+      <div class="wrap">
+        <a href="../">← Índice</a>
+        <h1>01 / Un valor por frecuencia</h1>
+        <p>Un <code>for</code> recorre los 64 valores de <code>fft.analyze()</code>. Cada valor controla el color y la barra de una celda.</p>
+      </div>
+    </header>
+    <main class="wrap">
+      <div class="controls" id="controles" aria-label="Controles de audio"></div>
+      <div class="stage stage--frequencies" id="escena" role="img" aria-label="64 valores de frecuencia representados con números y colores"></div>
+      <p class="note">Pista: <code>locket.mp3</code>. El slider inicia la reproducción desde el segundo elegido. Los números conservan cinco decimales; <code>sqrt(valor) * 12</code> hace más visibles los valores pequeños en el dibujo. Cada celda tiene un color aleatorio fijo y muestra la frecuencia central de su bin. Modifica <code>NUM_FRECUENCIAS</code> para comparar 16, 32, 64 o 128.</p>
+    </main>
+    <script src="../js/vendor/p5-2.3.4.min.js"></script>
+    <script src="../js/vendor/p5.sound-0.4.2.min.js"></script>
+    <script src="./app.js"></script>
+  </body>
+</html>

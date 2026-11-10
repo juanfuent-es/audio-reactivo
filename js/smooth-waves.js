@@ -15,9 +15,9 @@ async function setup() {
     stroke(255);
 
     enterButton = document.getElementById("enter-btn");
-    smoothSong = await loadSound("./sound/locket.mp3");
+    smoothSong = await audioPlayback.load();
     smoothFft = new p5.FFT(FFT_SIZE);
-    smoothFft.setInput(smoothSong);
+    smoothSong.connect(smoothFft);
     enterButton.addEventListener("click", startAudio, false);
 }
 
@@ -67,9 +67,7 @@ async function startAudio() {
         return;
     }
 
-    await userStartAudio();
-    smoothSong.loop(true);
-    smoothSong.play();
+    await audioPlayback.toggle(smoothSong);
     started = true;
     enterButton.style.display = "none";
 }

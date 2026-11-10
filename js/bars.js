@@ -1,14 +1,12 @@
-const BARS_AUDIO_PATH = "./sound/locket.mp3";
-
 let song;
 let barsFft;
 let barsAmplitude;
 
 async function setup() {
   createCanvas(windowWidth, windowHeight);
-  song = await loadSound(BARS_AUDIO_PATH);
+  song = await audioPlayback.load();
   barsFft = new p5.FFT(64);
-  barsFft.setInput(song);
+  song.connect(barsFft);
   barsAmplitude = new p5.Amplitude(0.9);
   song.connect(barsAmplitude);
   textAlign(CENTER, CENTER);
@@ -41,13 +39,7 @@ function draw() {
 
 async function mousePressed() {
   if (!song) return;
-  await userStartAudio();
-
-  if (song.isPlaying()) {
-    song.stop();
-  } else {
-    song.play();
-  }
+  await audioPlayback.toggle(song);
 }
 
 function windowResized() {

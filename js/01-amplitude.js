@@ -1,22 +1,20 @@
-let mic;
+let song;
 let amplitude;
-let micActive = false;
 
-function setup() {
+async function setup() {
   createCanvas(windowWidth, windowHeight);
-  mic = new p5.AudioIn();
-  amplitude = new p5.Amplitude(0.9);
-  mic.connect(amplitude);
   textAlign(CENTER, CENTER);
+  song = await audioPlayback.load();
+  amplitude = new p5.Amplitude(0.9);
+  song.connect(amplitude);
 }
 
 function draw() {
   background(0);
-
-  if (!micActive) {
+  if (!song || !amplitude || !song.isPlaying()) {
     fill(255);
     noStroke();
-    text("Haz clic para activar el micrófono", width / 2, height / 2);
+    text(song ? "Haz clic para reproducir" : "Cargando locket.mp3…", width / 2, height / 2);
     return;
   }
 
@@ -29,10 +27,7 @@ function draw() {
 }
 
 async function mousePressed() {
-  if (micActive) return;
-  await userStartAudio();
-  mic.start();
-  micActive = true;
+  await audioPlayback.toggle(song);
 }
 
 function windowResized() {

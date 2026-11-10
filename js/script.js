@@ -3,13 +3,13 @@ let amplitude;
 
 async function setup() {
   createCanvas(windowWidth, windowHeight);
-  song = await loadSound("./sound/locket.mp3");
+  song = await audioPlayback.load();
   amplitude = new p5.Amplitude();
   song.connect(amplitude);
 }
 
-function mousePressed() {
-    song.play();
+async function mousePressed() {
+  await audioPlayback.toggle(song);
 }
 
 function draw() {
@@ -18,4 +18,8 @@ function draw() {
   const level = amplitude.getLevel();
   const size = map(level, 0, 0.3, 50, min(width, height), true);
   circle(width / 2, height / 2, size);
+}
+
+function windowResized() {
+  resizeCanvas(windowWidth, windowHeight);
 }

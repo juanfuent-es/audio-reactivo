@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>03 / Una clase, 128 estrellas · Audio reactivo</title>
+    <link rel="stylesheet" href="../css/style.css">
+  </head>
+  <body>
+    <header class="site">
+      <div class="wrap">
+        <a href="../">← Índice</a>
+        <h1>03 / Una clase, 128 estrellas</h1>
+        <p>Cada instancia guarda su posición y un índice de frecuencia. La música modifica el brillo y el tamaño de las estrellas.</p>
+      </div>
+    </header>
+    <main class="wrap">
+      <div class="controls" aria-label="Controles de audio">
+        <button id="play" class="primary" disabled>Preparando audio…</button>
+        <div class="control">
+          <label for="archivo">Otra pista:</label>
+          <input id="archivo" type="file" accept="audio/*" disabled>
+        </div>
+        <span class="status" id="estado" role="status">Cargando locket.mp3…</span>
+      </div>
+      <div class="stage" id="escena" role="img" aria-label="03 / Una clase, 128 estrellas"></div>
+      <p class="note">En <code>app.js</code>, ubicar el <code>for</code> que crea las instancias. En <code>Estrella.js</code>, distinguir <code>constructor</code>, <code>actualizar()</code> y <code>dibujar()</code>.</p>
+    </main>
+    <script src="../js/vendor/p5-2.3.4.min.js"></script>
+    <script src="../js/vendor/p5.sound-0.4.2.min.js"></script>
+    <script src="../js/audio-playback.js"></script>
+    <script type="module" src="./app.js"></script>
+  </body>
+</html>

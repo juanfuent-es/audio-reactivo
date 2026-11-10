@@ -1,4 +1,4 @@
-const SVG_URL = "/img/next-station.svg";
+const SVG_URL = "./img/next-station.svg";
 const TOTAL_DURATION = 3; // seconds
 
 const SVG_STROKE_SELECTORS = [
@@ -22,14 +22,6 @@ async function loadSvg(url) {
 function mountSvg(svgMarkup) {
 	const container = document.createElement("div");
 	container.id = "next-station-container";
-	container.style.width = "min(900px, 92vw)";
-	container.style.margin = "10vh auto";
-
-	document.body.style.margin = "0";
-	document.body.style.minHeight = "100vh";
-	document.body.style.display = "grid";
-	document.body.style.placeItems = "center";
-	document.body.style.background = "#0c0a14";
 
 	container.innerHTML = svgMarkup;
 	document.body.appendChild(container);
