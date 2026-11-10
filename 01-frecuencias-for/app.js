@@ -2,7 +2,8 @@
 const NUM_FRECUENCIAS = 64;
 const NUM_COLUMNAS = 8;
 
-let cancion, fft, escena, boton, posicion;
+let cancion, fft, escena, boton, posicion, etiqueta;
+let inicio = 0, referencia = 0, arrastrando = false;
 let colores = [];
 
 async function setup() {
@@ -23,27 +24,50 @@ async function setup() {
   boton.html('Reproducir');
   boton.mousePressed(async () => {
     await userStartAudio();
-    if (cancion.isPlaying()) cancion.pause();
-    else cancion.play();
+    if (cancion.isPlaying()) {
+      inicio = tiempo();
+      cancion.pause();
+    } else {
+      referencia = getAudioContext().currentTime - inicio;
+      cancion.play();
+    }
     boton.html(cancion.isPlaying() ? 'Pausar' : 'Reproducir');
   });
 
-  const etiqueta = createElement('label', 'Escuchar desde el segundo: 0').parent('controles');
+  etiqueta = createElement('label', 'Escuchar desde el segundo: 0').parent('controles');
   etiqueta.attribute('for', 'posicion');
   posicion = createSlider(0, floor(cancion.duration()) - 1, 0, 1).parent('controles');
   posicion.id('posicion');
-  posicion.input(async () => {
-    await userStartAudio();
-    if (!cancion.isPlaying()) cancion.play();
-    cancion.jump(posicion.value());
+  // Al arrastrar solo se muestra el valor; el salto se hace al soltar.
+  posicion.input(() => {
+    arrastrando = true;
     etiqueta.html('Escuchar desde el segundo: ' + posicion.value());
+  });
+  posicion.elt.addEventListener('change', async () => {
+    arrastrando = false;
+    await userStartAudio();
+    const t = Number(posicion.value());
+    if (!cancion.isPlaying()) cancion.play();
+    cancion.jump(t);
+    inicio = t;
+    referencia = getAudioContext().currentTime - t;
     boton.html('Pausar');
   });
+}
+
+// Posición actual en segundos (p5.sound 0.4.2 no la expone).
+function tiempo() {
+  if (!cancion.isPlaying()) return inicio;
+  return (getAudioContext().currentTime - referencia) % cancion.duration();
 }
 
 function draw() {
   background(225, 45, 6);
   if (!fft) return;
+  if (!arrastrando) {
+    posicion.value(floor(tiempo()));
+    etiqueta.html('Escuchar desde el segundo: ' + posicion.value());
+  }
   const espectro = fft.analyze();
   const columnas = min(NUM_COLUMNAS, max(1, floor(width / 80)));
   const ancho = width / columnas;
