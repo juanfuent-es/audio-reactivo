@@ -1,5 +1,5 @@
 // Un valor de la FFT por celda. Todo el audio y los controles usan p5.
-const NUM_FRECUENCIAS = 64;
+const NUM_FRECUENCIAS = 128;
 const NUM_COLUMNAS = 8;
 
 let cancion, fft, escena, boton, posicion, etiqueta;
@@ -16,7 +16,7 @@ async function setup() {
 
   boton = createButton('Cargando…').parent('controles');
   boton.attribute('disabled', '');
-  cancion = await loadSound('../sound/locket.mp3');
+  cancion = await loadSound('../sound/little-fishes.mp3');
   cancion.loop(true); // En p5.sound 0.4.2, play() inicia la reproducción.
   fft = new p5.FFT(NUM_FRECUENCIAS);
   cancion.connect(fft);

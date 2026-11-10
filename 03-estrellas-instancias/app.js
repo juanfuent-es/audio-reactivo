@@ -1,79 +1,45 @@
 import { Estrella } from './Estrella.js';
 
-const FFT_SIZE = 256;
-const escena = document.querySelector('#escena');
-const boton = document.querySelector('#play');
-const estado = document.querySelector('#estado');
-const input = document.querySelector('#archivo');
-let estrellas = []; // ARREGLO de INSTANCIAS de una misma CLASE.
-let fft;
-let audio;
-let cargado = false;
+const NUM_ESTRELLAS = 256; // Igual al tamaño de la FFT: una estrella por valor.
 
 new p5((p) => {
+  let estrellas = [];
+  let cancion, fft;
+
   p.setup = async () => {
-    p.createCanvas(escena.clientWidth, escena.clientHeight).parent(escena);
+    p.createCanvas(p.windowWidth, p.windowHeight);
     p.pixelDensity(1);
-    // La FFT entrega FFT_SIZE valores; cada estrella tendrá uno de ellos.
-    fft = new p5.FFT(FFT_SIZE);
-    poblarEstrellas();
-    try { await cargar(); }
-    catch (error) { estado.textContent = 'Error al cargar: ' + error.message; }
+    fft = new p5.FFT(NUM_ESTRELLAS);
+    poblar();
+    cancion = await p.loadSound('../sound/locket.mp3');
+    cancion.loop(true);
+    cancion.connect(fft);
   };
-
-  function poblarEstrellas() {
-    estrellas = [];
-    for (let i = 0; i < FFT_SIZE; i++) {
-      // 'new' genera una instancia con atributos propios.
-      estrellas.push(new Estrella(p, p.random(p.width), p.random(p.height), i % FFT_SIZE));
-    }
-  }
-
-  async function cargar(ruta) {
-    boton.disabled = true;
-    input.disabled = true;
-    estado.textContent = 'Cargando audio…';
-    try {
-      const siguiente = await audioPlayback.load(p, ruta);
-      // Conectar la fuente al analizador para leer sus frecuencias.
-      siguiente.connect(fft);
-      if (audio) { audio.stop(); audio.disconnect(); }
-      audio = siguiente;
-      cargado = true;
-      estado.textContent = 'Listo · ' + (ruta?.name ?? 'locket.mp3');
-    } finally {
-      input.disabled = false;
-      boton.disabled = !cargado;
-      boton.textContent = audio?.isPlaying() ? 'Pausar' : 'Reproducir';
-    }
-  }
 
   p.draw = () => {
     p.background(8, 10, 17);
-    const spectrum = cargado ? fft.analyze() : Array(FFT_SIZE).fill(0);
-    // Cada objeto realiza el mismo método, pero usa datos diferentes.
+    const espectro = fft.analyze();
     for (const estrella of estrellas) {
-      estrella.actualizar(spectrum);
+      estrella.actualizar(espectro);
       estrella.dibujar();
     }
   };
 
-  p.windowResized = () => { p.resizeCanvas(escena.clientWidth, escena.clientHeight); poblarEstrellas(); };
+  // Click o toque en cualquier parte: alterna reproducir / pausar.
+  p.mousePressed = async () => {
+    if (!cancion) return;
+    await p.userStartAudio();
+    if (cancion.isPlaying()) cancion.pause();
+    else cancion.play();
+  };
 
-  boton.addEventListener('click', async () => {
-    if (!cargado) return;
-    try {
-      const reproduciendo = await audioPlayback.toggle(audio, p);
-      boton.textContent = reproduciendo ? 'Pausar' : 'Reproducir';
-      estado.textContent = reproduciendo ? 'Reproduciendo' : 'Pausado';
-    } catch (error) { estado.textContent = error.message; console.error(error); }
-  });
+  p.windowResized = () => {
+    p.resizeCanvas(p.windowWidth, p.windowHeight);
+    poblar();
+  };
 
-  input.addEventListener('change', async (event) => {
-    const archivo = event.target.files?.[0];
-    if (!archivo) return;
-    try { await cargar(archivo); }
-    catch (error) { estado.textContent = error.message; }
-    finally { input.value = ''; }
-  });
+  function poblar() {
+    estrellas = Array.from({ length: NUM_ESTRELLAS }, (_, i) =>
+      new Estrella(p, p.random(p.width), p.random(p.height), i));
+  }
 });

@@ -9,7 +9,6 @@
 }
 
 * { box-sizing: border-box; }
-body { margin: 0; }
 .wrap { width: min(68rem, calc(100% - 2rem)); margin-inline: auto; }
 header.site { padding-block: 2rem 1.25rem; border-bottom: 1px solid var(--line); }
 main { padding-block: 1.5rem 3rem; }
@@ -88,3 +87,5 @@ body[data-page="path"] { min-height: 100vh; display: grid; place-items: center; 
   .controls { gap: .5rem; }
   .controls .status { flex-basis: 100%; }
 }
+
+main, body { margin: 0; padding: 0;}
